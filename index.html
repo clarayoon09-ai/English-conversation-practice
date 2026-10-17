@@ -1,0 +1,478 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Speak Easy - 영어 회화 연습</title>
+<style>
+*{box-sizing:border-box}
+:root{
+  --purple:#7967d8;
+  --light:#eeeaff;
+  --bg:#fffaf2;
+  --ink:#29344a;
+  --muted:#778096;
+  --line:#e9e6e1;
+}
+body{
+  margin:0;background:var(--bg);color:var(--ink);
+  font-family:Arial,"Noto Sans KR",sans-serif;
+}
+button,input{font:inherit}
+button{cursor:pointer;border:0}
+.app{max-width:1100px;margin:auto;padding:22px}
+header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:22px}
+.logo{display:flex;align-items:center;gap:12px}
+.logo-icon{background:var(--purple);color:white;border-radius:15px;padding:13px;font-size:23px}
+h1{font-size:23px;margin:0}
+.subtitle{color:var(--muted);font-size:12px;margin-top:5px}
+.counter{background:white;border:1px solid var(--line);border-radius:30px;padding:10px 14px;font-size:13px}
+.hero{
+  padding:26px;border-radius:24px;
+  background:linear-gradient(120deg,#e8e4ff,#e4f7ec);
+  display:flex;align-items:center;justify-content:space-between;
+  gap:15px;margin-bottom:20px;
+}
+.hero h2{font-size:30px;margin:0 0 10px}
+.hero p{color:#606b80;line-height:1.7;margin:0}
+.hero .art{font-size:65px}
+.layout{display:grid;grid-template-columns:260px 1fr;gap:18px}
+.panel{background:white;border:1px solid var(--line);border-radius:20px;overflow:hidden}
+.sidebar{padding:18px}
+h3{font-size:16px;margin:0 0 13px}
+.levels{display:flex;gap:6px;margin-bottom:22px}
+.level{flex:1;padding:10px 3px;border-radius:10px;background:#f3f3f7;font-size:12px;color:#687187}
+.level.active{background:var(--purple);color:white}
+.scenes{display:grid;gap:8px}
+.scene{
+  display:flex;align-items:center;gap:10px;text-align:left;
+  background:white;padding:11px;border:1px solid transparent;
+  border-radius:13px;color:var(--ink);width:100%;
+}
+.scene.active{background:var(--light);border-color:#d4ccff}
+.emoji{font-size:23px}
+.scene strong{font-size:13px;display:block}
+.scene small{color:var(--muted);display:block;margin-top:4px;font-size:11px}
+.chat-header{padding:18px;border-bottom:1px solid var(--line)}
+.chat-header h3{margin:0;font-size:18px}
+.chat-header p{margin:6px 0 0;color:var(--muted);font-size:12px}
+.chat{height:370px;overflow-y:auto;padding:18px;display:flex;flex-direction:column;gap:15px}
+.message{display:flex;gap:9px;max-width:90%;align-items:flex-end}
+.message.me{align-self:flex-end;flex-direction:row-reverse}
+.avatar{width:33px;height:33px;flex-shrink:0;border-radius:11px;background:#fff0bd;display:grid;place-items:center}
+.me .avatar{background:var(--light)}
+.speaker{font-size:11px;color:var(--muted);margin:0 0 5px 3px}
+.bubble{padding:12px 14px;background:#f2f3f7;border-radius:5px 15px 15px 15px;font-size:14px;line-height:1.6;overflow-wrap:anywhere}
+.me .bubble{background:var(--purple);color:white;border-radius:15px 5px 15px 15px}
+.translation{font-size:12px;color:#81899a;margin:6px 2px;line-height:1.5}
+.message-buttons{display:flex;gap:5px;margin-top:6px}
+.mini{padding:5px 8px;border:1px solid var(--line);border-radius:8px;background:white;font-size:11px}
+.composer{border-top:1px solid var(--line);padding:15px}
+.suggestions{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:12px}
+.suggestion{border:1px solid #ded7ff;background:#faf9ff;color:#6352b8;padding:8px 11px;border-radius:25px;font-size:12px}
+.input-row{display:flex;gap:8px}
+.input-row input{flex:1;min-width:0;padding:13px;border:1px solid #dddfe8;border-radius:12px;outline:none}
+.input-row input:focus{border-color:var(--purple)}
+.send{background:var(--purple);color:white;border-radius:12px;padding:0 17px;font-weight:bold}
+.tools{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+.tool{background:#f2f2f6;border-radius:9px;padding:8px 10px;font-size:12px;color:#5f6980}
+.bottom{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:18px}
+.info{padding:18px}
+.phrase{padding:10px 0;border-bottom:1px solid #f0f0f0}
+.phrase:last-child{border:0}
+.phrase strong{font-size:13px}
+.phrase p{font-size:12px;color:var(--muted);margin:4px 0 0}
+.record{padding:13px;background:#f7f5ff;border-radius:13px;font-size:13px;line-height:1.7}
+.progress{height:7px;background:#e7e5ef;border-radius:9px;overflow:hidden;margin-top:10px}
+.progress span{display:block;height:100%;width:0;background:var(--purple);transition:width .2s}
+footer{text-align:center;font-size:11px;color:#999fb0;padding:25px 0 5px}
+@media(max-width:760px){
+  .app{padding:13px}
+  .layout{grid-template-columns:1fr}
+  .bottom{grid-template-columns:1fr}
+  .hero h2{font-size:24px}
+  .hero .art{font-size:45px}
+  .scenes{grid-template-columns:1fr 1fr}
+  .chat{height:330px}
+}
+@media(max-width:420px){
+  .hero .art{display:none}
+  .scene{padding:8px;gap:6px}
+  .scene strong{font-size:12px}
+  .input-row{gap:5px}
+  .send{padding:0 12px}
+  .message{max-width:96%}
+}
+</style>
+</head>
+<body>
+<div class="app">
+
+<header>
+  <div class="logo">
+    <div class="logo-icon">✦</div>
+    <div>
+      <h1>Speak Easy</h1>
+      <div class="subtitle">매일 조금씩, 자연스러운 영어 회화</div>
+    </div>
+  </div>
+  <div class="counter" id="counter">💬 0문장 연습</div>
+</header>
+
+<section class="hero">
+  <div>
+    <h2>영어로 말하는 게<br>조금 더 편해지는 시간!</h2>
+    <p>상황을 고르고 영어로 대답해 봐요.<br>
+    틀려도 괜찮아요. 한 문장씩 연습해 봐요!</p>
+  </div>
+  <div class="art">🗣️💬</div>
+</section>
+
+<div class="layout">
+
+<aside class="panel sidebar">
+  <h3>내 영어 레벨</h3>
+  <div class="levels">
+    <button class="level active" data-level="easy">초급</button>
+    <button class="level" data-level="mid">중급</button>
+    <button class="level" data-level="free">자유 회화</button>
+  </div>
+
+  <h3>연습 상황 고르기</h3>
+  <div class="scenes">
+    <button class="scene active" data-scene="cafe">
+      <span class="emoji">☕</span><span><strong>카페 주문</strong><small>음료 주문하기</small></span>
+    </button>
+    <button class="scene" data-scene="intro">
+      <span class="emoji">👋</span><span><strong>자기소개</strong><small>처음 만났을 때</small></span>
+    </button>
+    <button class="scene" data-scene="travel">
+      <span class="emoji">🧳</span><span><strong>여행</strong><small>길 묻기</small></span>
+    </button>
+    <button class="scene" data-scene="friend">
+      <span class="emoji">🎧</span><span><strong>친구와 수다</strong><small>취미와 일상</small></span>
+    </button>
+    <button class="scene" data-scene="shop">
+      <span class="emoji">🛍️</span><span><strong>쇼핑</strong><small>가격과 사이즈</small></span>
+    </button>
+    <button class="scene" data-scene="food">
+      <span class="emoji">🍝</span><span><strong>식당</strong><small>음식 주문하기</small></span>
+    </button>
+  </div>
+</aside>
+
+<main class="panel">
+  <div class="chat-header">
+    <h3 id="sceneTitle">☕ 카페에서 주문하기</h3>
+    <p id="sceneDesc">직원이 말을 걸어요. 영어로 대답해 보세요!</p>
+  </div>
+  <div class="chat" id="chat" aria-live="polite"></div>
+  <div class="composer">
+    <div class="suggestions" id="suggestions"></div>
+    <form class="input-row" id="chatForm">
+      <input id="answer" placeholder="영어로 답을 입력해 보세요..." autocomplete="off">
+      <button class="send" type="submit">보내기 ↗</button>
+    </form>
+    <div class="tools">
+      <button class="tool" id="hintBtn">💡 힌트 보기</button>
+      <button class="tool" id="listenBtn">🔊 영어 듣기</button>
+      <button class="tool" id="micBtn">🎙️ 음성 입력</button>
+      <button class="tool" id="resetBtn">↻ 처음부터</button>
+    </div>
+  </div>
+</main>
+</div>
+
+<div class="bottom">
+  <section class="panel info">
+    <h3>✨ 오늘의 핵심 표현</h3>
+    <div id="phrases"></div>
+  </section>
+  <section class="panel info">
+    <h3>📚 나의 연습 기록</h3>
+    <div class="record">
+      <strong id="recordTitle">연습을 시작해 보세요!</strong>
+      <div id="recordText">한 문장씩 답하면 기록이 쌓여요.</div>
+      <div class="progress"><span id="progressBar"></span></div>
+    </div>
+    <p id="tipText" style="font-size:12px;color:#778096;line-height:1.7">
+      팁: 완벽한 문장보다 직접 말해 보는 것이 중요해요!
+    </p>
+  </section>
+</div>
+
+<footer>Speak Easy · 나만의 영어 회화 연습장</footer>
+</div>
+
+<script>
+const scenes={
+cafe:{
+ title:"☕ 카페에서 주문하기",
+ desc:"직원이 말을 걸어요. 영어로 대답해 보세요!",
+ opening:["Hi! What can I get for you today?","안녕하세요! 오늘 무엇을 드릴까요?"],
+ turns:[
+  ["What size would you like?","어떤 사이즈로 드릴까요?",["A medium, please.","A large, please.","What sizes do you have?"],"사이즈를 말하고 please를 붙여 보세요."],
+  ["Would you like it hot or iced?","따뜻하게 드릴까요, 아이스로 드릴까요?",["Iced, please.","Hot, please.","Can I have it iced?"],"아이스는 iced, 따뜻한 음료는 hot이에요."],
+  ["Anything else?","더 필요한 건 있으신가요?",["That's all, thank you.","Can I get a cookie, too?","No, that's everything."],"주문을 마칠 때 That's all, thank you.라고 해요."],
+  ["That'll be five dollars. Have a nice day!","5달러입니다. 좋은 하루 보내세요!",["Thank you!","Thanks! You too!","Have a nice day!"],"You too!는 '당신도요!'라는 자연스러운 대답이에요."]
+ ],
+ phrases:[["What can I get for you?","무엇을 드릴까요?"],["A medium, please.","미디엄 사이즈로 주세요."],["That's all, thank you.","이상입니다. 감사합니다."]]
+},
+intro:{
+ title:"👋 자기소개하기",desc:"새로운 친구와 영어로 대화를 시작해요!",
+ opening:["Hi! I'm Alex. What's your name?","안녕! 나는 알렉스야. 네 이름은 뭐야?"],
+ turns:[
+  ["Nice to meet you! Where are you from?","만나서 반가워! 어디에서 왔어?",["I'm from Korea.","I'm from Seoul, Korea.","I'm Korean."],"I'm from + 장소로 출신을 말할 수 있어요."],
+  ["What do you like to do in your free time?","여가 시간에는 뭘 하는 걸 좋아해?",["I like drawing.","I enjoy listening to music.","I like reading books."],"I like + 동사-ing로 취미를 말해 보세요."],
+  ["What's your favorite kind of music?","가장 좋아하는 음악 장르는 뭐야?",["I love pop music.","I like K-pop the most.","I listen to all kinds of music."],"My favorite is...로 좋아하는 것을 말할 수 있어요."],
+  ["It was nice talking to you!","너와 이야기해서 즐거웠어!",["Nice talking to you, too!","See you later!","It was nice talking to you, too."],"too를 붙이면 '나도'라는 뜻을 표현해요."]
+ ],
+ phrases:[["Nice to meet you.","만나서 반가워요."],["I like drawing.","저는 그림 그리기를 좋아해요."],["It was nice talking to you.","이야기해서 즐거웠어요."]]
+},
+travel:{
+ title:"🧳 여행 중 길 묻기",desc:"여행지에서 길을 물어봐요!",
+ opening:["Hello! Can I help you?","안녕하세요! 도와드릴까요?"],
+ turns:[
+  ["Where are you trying to go?","어디로 가려고 하시나요?",["I'm looking for the train station.","How can I get to the museum?","I'd like to go to the city center."],"I'm looking for...는 '~을 찾고 있어요'라는 뜻이에요."],
+  ["It's about a ten-minute walk.","걸어서 약 10분 거리예요.",["Is it far from here?","How do I get there?","Is there a bus?"],"거리를 물을 땐 Is it far from here?라고 해요."],
+  ["Go straight and turn left at the traffic light.","직진한 뒤 신호등에서 왼쪽으로 도세요.",["Could you say that again, please?","Got it. Thank you!","Is it on the left?"],"다시 말해 달라고 할 때 Could you say that again?을 써요."],
+  ["That's right! Have a great day!","맞아요! 좋은 하루 보내세요!",["Thank you so much!","You too!","Thanks for your help!"],"Thanks for your help!는 '도와주셔서 감사해요'라는 뜻이에요."]
+ ],
+ phrases:[["I'm looking for the station.","역을 찾고 있어요."],["Is it far from here?","여기서 먼가요?"],["Thanks for your help!","도와주셔서 감사해요!"]]
+},
+friend:{
+ title:"🎧 친구와 수다 떨기",desc:"취미와 일상에 대해 편하게 이야기해요!",
+ opening:["Hey! How's it going?","안녕! 요즘 어떻게 지내?"],
+ turns:[
+  ["What have you been up to lately?","요즘 뭐 하고 지냈어?",["I've been studying a lot.","I've been watching movies.","Not much. Just relaxing."],"I've been + 동사-ing는 최근 해 온 일을 말할 때 써요."],
+  ["What kind of movies do you like?","어떤 영화를 좋아해?",["I like comedies.","I'm into animated movies.","I love science fiction."],"I'm into...는 '~에 푹 빠져 있어'라는 뜻이에요."],
+  ["You should recommend one to me!","나한테 하나 추천해 줘!",["I highly recommend it.","You should watch this one.","I'll tell you my favorite."],"I recommend...로 추천할 수 있어요."],
+  ["Let's hang out sometime!","언제 같이 놀자!",["Sure! That sounds great.","I'd love to!","Let's plan something soon."],"I'd love to!는 제안에 긍정적으로 답하는 표현이에요."]
+ ],
+ phrases:[["How's it going?","요즘 어때?"],["I'm into animated movies.","애니메이션 영화에 푹 빠져 있어."],["I'd love to!","정말 좋아! / 그러고 싶어!"]]
+},
+shop:{
+ title:"🛍️ 쇼핑하기",desc:"가게에서 색상과 사이즈를 물어봐요!",
+ opening:["Hi! Can I help you find anything?","안녕하세요! 찾으시는 물건이 있으세요?"],
+ turns:[
+  ["What color are you looking for?","어떤 색을 찾으세요?",["I'm looking for a blue one.","Do you have this in black?","I'd like something in white."],"Do you have this in + 색깔?로 다른 색상을 물어봐요."],
+  ["What size do you need?","어떤 사이즈가 필요하세요?",["A small, please.","Do you have a medium?","Can I try this on?"],"입어 봐도 되는지 Can I try this on?이라고 물어봐요."],
+  ["The fitting room is over there.","탈의실은 저쪽에 있어요.",["Thank you!","I'll try it on.","Thanks for your help."],"I'll try it on.은 '입어 볼게요'라는 뜻이에요."],
+  ["How does it fit?","사이즈가 잘 맞나요?",["It fits perfectly.","It's a little too big.","It's a bit too small."],"It fits perfectly는 '완벽하게 잘 맞아요'라는 뜻이에요."]
+ ],
+ phrases:[["Do you have this in black?","이거 검은색도 있나요?"],["Can I try this on?","입어 봐도 되나요?"],["It fits perfectly.","사이즈가 딱 맞아요."]]
+},
+food:{
+ title:"🍝 식당에서 주문하기",desc:"식당에서 메뉴를 보고 음식을 주문해요!",
+ opening:["Good evening! Table for how many?","안녕하세요! 몇 분이신가요?"],
+ turns:[
+  ["Would you like to see the menu?","메뉴를 보시겠어요?",["Yes, please.","Could I see the menu, please?","Thank you."],"Could I..., please?는 정중하게 요청하는 표현이에요."],
+  ["Are you ready to order?","주문하시겠어요?",["I'd like the pasta, please.","Can I have the chicken salad?","What do you recommend?"],"I'd like...는 공손하게 주문할 때 쓸 수 있어요."],
+  ["Would you like anything to drink?","음료도 필요하신가요?",["Water, please.","Just water for me, thanks.","I'd like an iced tea."],"Just water for me는 '저는 물만 주세요'라는 뜻이에요."],
+  ["Is everything okay with your meal?","음식은 괜찮으신가요?",["Everything is great, thank you.","It's delicious!","Could I get some more water?"],"음식이 맛있을 때 It's delicious!라고 해요."]
+ ],
+ phrases:[["Could I see the menu, please?","메뉴를 볼 수 있을까요?"],["I'd like the pasta, please.","파스타로 주세요."],["It's delicious!","정말 맛있어요!"]]
+}
+};
+
+let scene="cafe",level="easy",turn=0,count=0,lastEnglish="";
+const chat=document.getElementById("chat");
+const suggestions=document.getElementById("suggestions");
+
+function escapeHTML(s){
+ return String(s).replace(/[&<>"']/g,c=>({
+  "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+ }[c]));
+}
+
+function speak(text){
+ if(!("speechSynthesis" in window)){
+  alert("이 브라우저에서는 음성 듣기를 지원하지 않아요.");
+  return;
+ }
+ speechSynthesis.cancel();
+ const utterance=new SpeechSynthesisUtterance(text);
+ utterance.lang="en-US";
+ utterance.rate=.88;
+ speechSynthesis.speak(utterance);
+}
+
+function addMessage(who,en,ko=""){
+ const me=who==="me";
+ const div=document.createElement("div");
+ div.className="message"+(me?" me":"");
+ div.innerHTML=`
+  <div class="avatar">${me?"🌟":"🤖"}</div>
+  <div>
+   <div class="speaker">${me?"나":"Alex · 대화 파트너"}</div>
+   <div class="bubble">${escapeHTML(en)}</div>
+   ${ko?`<div class="translation">${escapeHTML(ko)}</div>`:""}
+   <div class="message-buttons">
+    <button class="mini listen">🔊 듣기</button>
+    <button class="mini copy">📋 복사</button>
+   </div>
+  </div>`;
+ div.querySelector(".listen").onclick=()=>speak(en);
+ div.querySelector(".copy").onclick=async()=>{
+  try{
+   await navigator.clipboard.writeText(en);
+   alert("영어 문장을 복사했어요!");
+  }catch(e){alert(en);}
+ };
+ chat.appendChild(div);
+ chat.scrollTop=chat.scrollHeight;
+ lastEnglish=en;
+}
+
+function renderPhrases(){
+ const phrases=scenes[scene].phrases;
+ document.getElementById("phrases").innerHTML=phrases.map(p=>`
+  <div class="phrase">
+   <strong>✦ ${escapeHTML(p[0])}</strong>
+   <p>${escapeHTML(p[1])}</p>
+  </div>`).join("");
+}
+
+function renderSuggestions(){
+ suggestions.innerHTML="";
+ const s=scenes[scene];
+ if(turn>=s.turns.length){
+  const b=document.createElement("button");
+  b.className="suggestion";
+  b.textContent="↻ 다시 연습하기";
+  b.onclick=reset;
+  suggestions.appendChild(b);
+  return;
+ }
+ s.turns[turn][2].forEach(text=>{
+  const b=document.createElement("button");
+  b.className="suggestion";
+  b.textContent=text;
+  b.onclick=()=>{
+   document.getElementById("answer").value=text;
+   document.getElementById("answer").focus();
+  };
+  suggestions.appendChild(b);
+ });
+}
+
+function reset(){
+ turn=0;
+ chat.innerHTML="";
+ const s=scenes[scene];
+ document.getElementById("sceneTitle").textContent=s.title;
+ document.getElementById("sceneDesc").textContent=s.desc;
+ addMessage("bot",s.opening[0],s.opening[1]);
+ renderSuggestions();
+ renderPhrases();
+ document.getElementById("answer").value="";
+ document.getElementById("tipText").textContent=
+  "팁: 완벽한 문장보다 직접 말해 보는 것이 중요해요!";
+}
+
+function sendAnswer(text){
+ text=text.trim();
+ if(!text)return;
+ const s=scenes[scene];
+ if(turn>=s.turns.length){
+  alert("대화가 끝났어요! 다시 연습해 보세요.");
+  return;
+ }
+
+ addMessage("me",text);
+ document.getElementById("answer").value="";
+ count++;
+ document.getElementById("counter").textContent=`💬 ${count}문장 연습`;
+ document.getElementById("recordTitle").textContent=`총 ${count}문장을 연습했어요!`;
+ document.getElementById("recordText").textContent=
+  "잘하고 있어요! 다른 추천 문장도 연습해 보세요.";
+ document.getElementById("progressBar").style.width=
+  Math.min(100,count*5)+"%";
+
+ const response=s.turns[turn];
+ const reply=level==="free"
+  ?"That's interesting! Tell me more!"
+  :response[0];
+ const translation=level==="free"
+  ?"흥미롭네요! 더 이야기해 주세요!"
+  :response[1];
+
+ turn++;
+ setTimeout(()=>{
+  addMessage("bot",reply,translation);
+  if(turn>=s.turns.length){
+   addMessage("bot",
+    "Great job! 🎉 You finished the conversation!",
+    "정말 잘했어요! 대화를 끝냈어요. 다시 연습해 볼까요?");
+   document.getElementById("tipText").textContent=
+    "오늘의 미션 완료! 다른 상황도 연습해 보세요.";
+  }
+  renderSuggestions();
+ },250);
+}
+
+document.getElementById("chatForm").addEventListener("submit",e=>{
+ e.preventDefault();
+ sendAnswer(document.getElementById("answer").value);
+});
+
+document.querySelectorAll(".scene").forEach(button=>{
+ button.addEventListener("click",()=>{
+  document.querySelectorAll(".scene").forEach(b=>b.classList.remove("active"));
+  button.classList.add("active");
+  scene=button.dataset.scene;
+  reset();
+ });
+});
+
+document.querySelectorAll(".level").forEach(button=>{
+ button.addEventListener("click",()=>{
+  document.querySelectorAll(".level").forEach(b=>b.classList.remove("active"));
+  button.classList.add("active");
+  level=button.dataset.level;
+  document.getElementById("tipText").textContent={
+   easy:"초급: 추천 문장을 활용해 천천히 연습해 보세요.",
+   mid:"중급: 추천 문장을 참고하되, 나만의 문장도 만들어 보세요.",
+   free:"자유 회화: 하고 싶은 말을 자유롭게 영어로 입력해 보세요."
+  }[level];
+ });
+});
+
+document.getElementById("hintBtn").onclick=()=>{
+ if(turn>=scenes[scene].turns.length){
+  alert("대화가 끝났어요. 다시 시작해 보세요!");
+  return;
+ }
+ document.getElementById("tipText").textContent=
+  "💡 힌트: "+scenes[scene].turns[turn][3];
+};
+
+document.getElementById("listenBtn").onclick=()=>{
+ speak(lastEnglish||scenes[scene].opening[0]);
+};
+
+document.getElementById("resetBtn").onclick=reset;
+
+document.getElementById("micBtn").onclick=()=>{
+ const Recognition=window.SpeechRecognition||window.webkitSpeechRecognition;
+ if(!Recognition){
+  alert("음성 입력은 지원되는 브라우저에서 사용해 주세요. 직접 입력할 수도 있어요.");
+  return;
+ }
+ const recognition=new Recognition();
+ recognition.lang="en-US";
+ recognition.interimResults=false;
+ recognition.onresult=e=>{
+  document.getElementById("answer").value=e.results[0][0].transcript;
+ };
+ recognition.onerror=()=>{
+  alert("마이크 권한을 확인하거나 직접 입력해 주세요.");
+ };
+ recognition.start();
+};
+
+reset();
+</script>
+</body>
+</html>
