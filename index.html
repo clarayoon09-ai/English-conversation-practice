@@ -4,828 +4,191 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Speak Easy - 영어 회화 연습</title>
+<title>Speak Easy | 영어 회화 놀이터</title>
 <style>
-:root {
-  --pink:#ff8fb1;
-  --purple:#9b8afb;
-  --blue:#83caff;
-  --ink:#34344a;
-  --muted:#77788e;
-  --bg:#f8f7ff;
-  --card:#ffffff;
-  --line:#eae7f5;
-}
+:root{--ink:#302e49;--muted:#77758e;--pink:#ff91b5;--purple:#9284f4;--blue:#9edcff;--mint:#bcefdc;--cream:#fff8e9;--bg:#f8f7ff;--line:#e9e5f5;--white:#fff}
 *{box-sizing:border-box}
-body{
-  margin:0;background:var(--bg);color:var(--ink);
-  font-family:Arial,"Noto Sans KR",sans-serif;
-  line-height:1.6;
-}
-header{
-  text-align:center;padding:34px 18px 28px;
-  background:linear-gradient(135deg,#ffe1ec,#e8e1ff,#dff3ff);
-}
-header h1{margin:0;font-size:clamp(27px,5vw,40px)}
-header p{margin:8px 0 0;color:#62617b}
-main{max-width:1100px;margin:auto;padding:20px 15px 50px}
-nav{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:22px}
-nav a{
-  color:var(--ink);text-decoration:none;background:white;
-  border:1px solid var(--line);border-radius:20px;padding:8px 13px;
-  font-size:14px;font-weight:bold;
-}
-section{
-  background:var(--card);border:1px solid var(--line);
-  border-radius:20px;padding:22px;margin:18px 0;
-  box-shadow:0 5px 20px #51458b0a;
-}
-h2{font-size:22px;margin:0 0 5px}
-h3{margin:12px 0}
-.description{color:var(--muted);margin:0 0 16px;font-size:14px}
-.controls{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0}
-select,input,textarea{
-  min-width:0;border:1px solid #dedbec;border-radius:11px;
-  padding:11px 12px;background:white;color:var(--ink);
-  font:inherit;
-}
-select,input{flex:1}
-textarea{width:100%;resize:vertical}
-button{
-  cursor:pointer;border:0;border-radius:12px;padding:11px 15px;
-  font:inherit;font-weight:bold;transition:transform .15s,opacity .15s;
-}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Arial,"Noto Sans KR",sans-serif;line-height:1.6}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer;border:0;border-radius:13px;padding:11px 15px;font-weight:700;transition:.15s}
 button:hover{transform:translateY(-1px)}
-button:disabled{cursor:not-allowed;opacity:.55;transform:none}
+button:disabled{opacity:.5;cursor:not-allowed;transform:none}
+header{padding:38px 18px 30px;text-align:center;background:linear-gradient(125deg,#ffe1ec,#eee4ff 55%,#dcf4ff)}
+.logo{font-size:13px;letter-spacing:3px;font-weight:800;color:#7768c8}
+header h1{font-size:clamp(30px,5vw,46px);margin:6px 0}
+header p{margin:0 auto;max-width:620px;color:#65617f}
+.pill{display:inline-block;background:#ffffffb8;border:1px solid #ffffff;padding:5px 12px;border-radius:99px;font-size:12px;margin-top:14px}
+main{max-width:1080px;margin:auto;padding:18px 14px 44px}
+nav{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin:0 0 20px;position:sticky;top:0;z-index:20;background:var(--bg);padding:10px 0}
+nav button{background:#fff;border:1px solid var(--line);border-radius:99px;padding:10px 14px;color:var(--ink);font-size:13px;font-weight:700}
+nav button.active{background:var(--purple);color:#fff;border-color:var(--purple)}
+.panel.page-hidden{display:none}
+.panel{background:#fff;border:1px solid var(--line);border-radius:22px;padding:22px;margin:16px 0;box-shadow:0 8px 28px #4b43850a}
+h2{font-size:22px;margin:0 0 4px}
+.sub{color:var(--muted);font-size:14px;margin:0 0 17px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+select,input{border:1px solid #ddd8ed;background:#fff;color:var(--ink);border-radius:12px;padding:11px 12px;min-width:0}
+select{flex:1}
+input{width:100%}
 .primary{background:var(--purple);color:white}
 .pink{background:var(--pink);color:white}
-.blue{background:var(--blue);color:#25364c}
-.light{background:#f0edff;color:#51448b}
-.smallbtn{padding:8px 11px;background:#f1edff;color:#594c96;font-size:13px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}
-.item{
-  border:1px solid var(--line);border-radius:15px;
-  padding:14px;background:#fff;min-width:0;
-}
-.en{font-size:19px;font-weight:bold;overflow-wrap:anywhere}
-.ko{color:#62549b;font-weight:bold;margin:5px 0}
-.muted{color:var(--muted);font-size:13px}
-.chatbox{
-  background:#f9f8ff;border:1px solid var(--line);
-  border-radius:15px;padding:14px;height:300px;overflow-y:auto;
-  display:flex;flex-direction:column;gap:10px;
-}
+.blue{background:var(--blue);color:#2b3b53}
+.soft{background:#f0edff;color:#5b5090}
+.green{background:var(--mint);color:#265e4d}
+.small{font-size:13px;padding:8px 11px}
+.level-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:15px 0}
+.level-card{border:1px solid var(--line);border-radius:15px;padding:13px;text-align:left;background:#fff;color:var(--ink)}
+.level-card strong{display:block;font-size:16px}
+.level-card span{font-size:12px;color:var(--muted)}
+.level-card.active{border:2px solid var(--purple);background:#f7f4ff}
+.place-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(125px,1fr));gap:9px;margin:12px 0 16px}
+.place{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 8px;text-align:center;color:var(--ink)}
+.place .emoji{font-size:25px;display:block}
+.place small{display:block;color:var(--muted);font-size:12px}
+.place.active{background:#fff0f6;border:2px solid var(--pink)}
+.start-card{background:linear-gradient(120deg,#f7f3ff,#f0faff);border-radius:17px;padding:16px;margin:14px 0}
+.eyebrow{font-size:12px;font-weight:800;color:#8173cb;letter-spacing:1px}
+.start-line{font-size:clamp(21px,3vw,28px);font-weight:800;margin:5px 0}
+.korean{color:#62569a;font-weight:700}
+.example-box{background:#fff;border:1px dashed #d9d0f5;border-radius:13px;padding:13px;margin-top:12px}
+.example-box b{font-size:13px}
+.example-box p{margin:5px 0}
+.chat{height:310px;overflow-y:auto;background:#faf9ff;border:1px solid var(--line);border-radius:16px;padding:13px;display:flex;flex-direction:column;gap:10px}
 .bubble{max-width:88%;padding:11px 13px;border-radius:15px;overflow-wrap:anywhere}
-.bot{align-self:flex-start;background:#eae5ff}
-.user{align-self:flex-end;background:#ffe3ed}
+.bubble.bot{background:#eae5ff;align-self:flex-start}
+.bubble.user{background:#ffe6ef;align-self:flex-end}
 .bubble small{display:block;color:#777;font-size:11px;margin-bottom:3px}
-.chat-input{display:flex;gap:8px;margin-top:10px}
-.chat-input input{flex:1;width:100%}
-#tip,#quizFeedback{
-  background:#f6f3ff;padding:12px;border-radius:12px;
-  white-space:pre-line;margin:12px 0;
-}
-.option{
-  width:100%;text-align:left;margin:5px 0;background:#f5f3ff;
-  color:var(--ink);border:1px solid transparent;
-}
-.option.correct{background:#dff7e9;border-color:#6bbd91}
-.option.wrong{background:#ffe5e8;border-color:#f28d9a}
-#quizMicStatus{min-height:22px}
-.progress{height:9px;background:#eeeaf8;border-radius:99px;overflow:hidden}
-#progressFill{height:100%;width:0;background:var(--pink);transition:width .2s}
-footer{text-align:center;padding:10px;color:var(--muted);font-size:12px}
-@media(max-width:600px){
-  main{padding:12px 10px 30px}
-  section{padding:16px;border-radius:16px}
-  .controls>*{width:100%}
-  .chat-input{flex-wrap:wrap}
-  .chat-input input{flex-basis:100%}
-  .chat-input button{flex:1}
-  .bubble{max-width:96%}
-}
+.bubble button{margin-top:7px}
+.chat-entry{display:grid;grid-template-columns:1fr auto auto;gap:8px;margin-top:10px}
+.hint{font-size:13px;color:var(--muted);margin:8px 0}
+.tips-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px}
+.tip-card{background:#fbfaff;border:1px solid var(--line);border-radius:14px;padding:13px}
+.tip-card b{display:block;margin-bottom:5px}
+.tip-card p{font-size:14px;margin:0;color:#65627b}
+.words-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px;margin-top:14px}
+.word{border:1px solid var(--line);border-radius:14px;padding:13px}
+.word-en{font-size:20px;font-weight:800}
+.word-ko{color:#675aa1;font-weight:700}
+.muted{color:var(--muted);font-size:13px}
+.phrase{border:1px solid var(--line);border-radius:14px;padding:13px}
+.quiz-options{display:grid;gap:8px;margin:13px 0}
+.quiz-option{width:100%;text-align:left;background:#f4f1ff;color:var(--ink);border:1px solid transparent}
+.quiz-option.correct{background:#e0f7e9;border-color:#7cc99c}
+.quiz-option.wrong{background:#ffe5e9;border-color:#ef9aaa}
+.progress{height:8px;background:#eeeaf7;border-radius:99px;overflow:hidden}
+.progress div{height:100%;width:0;background:var(--pink)}
+.feedback{background:#f8f5ff;border-radius:13px;padding:12px;white-space:pre-line;min-height:45px}
+footer{text-align:center;color:var(--muted);font-size:12px;padding:12px}
+@media(max-width:620px){.panel{padding:16px;border-radius:17px}.level-cards{grid-template-columns:1fr}.chat-entry{grid-template-columns:1fr 1fr}.chat-entry input{grid-column:1/-1}.bubble{max-width:96%}.row>select,.row>button{width:100%}}
 </style>
 </head>
 <body>
 <header>
-  <h1>🌷 Speak Easy</h1>
-  <p>하루 10분, 귀엽고 즐겁게 영어로 대화해 봐요!</p>
+  <div class="logo">SPEAK EASY CLUB</div>
+  <h1>🌷 영어 회화 놀이터</h1>
+  <p>장소와 난이도를 고르면 그 상황에 딱 맞는 영어 대화가 시작돼요.<br>틀려도 괜찮아! 말해 보는 게 가장 중요해요.</p>
+  <span class="pill">초급 · 중급 · 자유회화 · 예시 답변 · 발음 듣기</span>
 </header>
-
 <main>
-<nav>
-  <a href="#conversation">💬 회화 연습</a>
-  <a href="#words">📚 단어장</a>
-  <a href="#phrases">✨ 핵심 문장</a>
-  <a href="#quiz">🎯 퀴즈</a>
+<nav aria-label="학습 메뉴">
+  <button type="button" class="active" data-page="practice">💬 회화 연습</button>
+  <button type="button" data-page="howto">💡 사용 예시</button>
+  <button type="button" data-page="vocab">📚 단어장</button>
+  <button type="button" data-page="phrases">✨ 표현 모음</button>
+  <button type="button" data-page="quiz">🎯 퀴즈</button>
 </nav>
 
-<section id="conversation">
-  <h2>💬 영어 회화 연습</h2>
-  <p class="description">난이도와 상황을 선택하고 영어로 대답해 보세요.</p>
-
-  <div class="controls">
-    <select id="level" aria-label="영어 난이도">
-      <option value="beginner">🌱 초급 - 쉬운 한 문장</option>
-      <option value="intermediate">🌿 중급 - 이유와 경험 설명</option>
-      <option value="free">🌈 자유회화 - 자유롭게 대화</option>
-    </select>
-    <select id="scene" aria-label="대화 상황">
-      <option value="cafe">☕ 카페</option>
-      <option value="intro">👋 자기소개</option>
-      <option value="travel">✈️ 여행</option>
-      <option value="friends">🧸 친구와 대화</option>
-      <option value="shopping">🛍️ 쇼핑</option>
-      <option value="restaurant">🍝 식당</option>
-    </select>
-    <button class="primary" id="startBtn">새 대화 시작</button>
+<section class="panel" id="practice">
+  <h2>💬 오늘의 대화</h2>
+  <p class="sub">먼저 난이도와 장소를 선택해 주세요. 선택할 때마다 시작 문장과 예시 답변이 달라져요.</p>
+  <div class="level-cards">
+    <button class="level-card active" data-level="beginner"><strong>🌱 초급</strong><span>짧고 쉬운 문장으로 대답하기</span></button>
+    <button class="level-card" data-level="intermediate"><strong>🌿 중급</strong><span>이유와 경험까지 설명하기</span></button>
+    <button class="level-card" data-level="free"><strong>🌈 자유회화</strong><span>내 생각을 자유롭게 말하기</span></button>
   </div>
-
-  <div id="levelHelp" class="muted">초급: 짧고 쉬운 문장으로 대화해요.</div>
-  <div id="chatbox" class="chatbox" aria-live="polite">
-    <div class="bubble bot">
-      <small>Speak Easy</small>
-      안녕! 난 영어 회화 연습 도우미야. 난이도를 고르고 새 대화를 시작해 봐! 😊
+  <div class="eyebrow">WHERE DO YOU WANT TO TALK?</div>
+  <div class="place-grid" id="places">
+    <button class="place active" data-place="cafe"><span class="emoji">☕</span>카페<small>음료 주문하기</small></button>
+    <button class="place" data-place="school"><span class="emoji">🏫</span>학교<small>친구와 대화하기</small></button>
+    <button class="place" data-place="travel"><span class="emoji">✈️</span>여행<small>길 묻고 답하기</small></button>
+    <button class="place" data-place="shop"><span class="emoji">🛍️</span>쇼핑<small>물건 고르기</small></button>
+    <button class="place" data-place="restaurant"><span class="emoji">🍝</span>식당<small>음식 주문하기</small></button>
+    <button class="place" data-place="friends"><span class="emoji">🧸</span>친구와 수다<small>취미와 일상</small></button>
+    <button class="place" data-place="airport"><span class="emoji">🧳</span>공항<small>체크인하기</small></button>
+    <button class="place" data-place="library"><span class="emoji">📚</span>도서관<small>책과 공부 이야기</small></button>
+  </div>
+  <div class="row">
+    <label for="translationMode" style="font-weight:700;align-self:center">한국어 해석</label>
+    <select id="translationMode" aria-label="한국어 해석 표시 방식" style="max-width:260px">
+      <option value="show">한국어 해석 보기</option>
+      <option value="hide">한국어 해석 안 보기</option>
+    </select>
+    <button id="start" class="primary">✨ 이 설정으로 대화 시작</button>
+    <button id="newPrompt" class="soft">🎲 다른 시작 문장</button>
+  </div>
+  <div class="start-card">
+    <div class="eyebrow" id="scenarioLabel">BEGINNER · CAFE</div>
+    <div class="start-line" id="opening">Hi! What would you like to drink?</div>
+    <div class="korean" id="openingKo">안녕하세요! 어떤 음료를 드릴까요?</div>
+    <div class="example-box">
+      <b>📝 이렇게 대답해 볼 수 있어요</b>
+      <p id="exampleEn">I'd like a hot chocolate, please.</p>
+      <p class="korean" id="exampleKo">핫초콜릿 하나 주세요.</p>
+      <button id="speakExample" class="small blue">🔊 예시 발음 듣기</button>
     </div>
   </div>
-
-  <div class="chat-input">
-    <input id="chatInput" type="text" placeholder="영어로 대답을 입력하세요..." autocomplete="off">
-    <button id="sendBtn" class="primary">보내기 ➤</button>
-    <button id="micBtn" class="pink">🎙️ 말하기</button>
+  <div class="chat" id="chat" aria-live="polite">
+    <div class="bubble bot"><small>Speak Easy</small>안녕! 난이도와 장소를 선택한 뒤 ‘이 설정으로 대화 시작’을 눌러 봐. 😊</div>
   </div>
-  <div id="speechStatus" class="muted" aria-live="polite">음성 입력은 브라우저의 마이크 권한이 필요해요.</div>
-  <div id="tip">💡 팁: 틀려도 괜찮아요. 직접 영어 문장을 만들어 보세요!</div>
+  <div class="chat-entry">
+    <input id="answer" placeholder="여기에 영어로 대답해 보세요..." autocomplete="off">
+    <button id="send" class="primary">보내기 ➤</button>
+    <button id="mic" class="pink">🎙️ 말하기</button>
+  </div>
+  <div id="voiceStatus" class="hint">마이크는 지원되는 브라우저에서 권한을 허용하면 사용할 수 있어요.</div>
 </section>
 
-<section id="words">
-  <h2>📚 나만의 영어 단어장</h2>
-  <p class="description">단어와 뜻을 검색하고, 예문을 읽거나 영어 발음을 들어 보세요.</p>
-  <div class="controls">
-    <input id="wordSearch" type="search" placeholder="🔎 영어 단어 또는 한국어 뜻 검색">
-    <select id="wordCategory" aria-label="단어 카테고리">
-      <option value="all">모든 카테고리</option>
-      <option value="일상">일상</option>
-      <option value="감정">감정</option>
-      <option value="여행">여행</option>
-      <option value="음식">음식</option>
-      <option value="학교">학교</option>
-      <option value="쇼핑">쇼핑</option>
-    </select>
-    <button id="randomWords" class="pink">🎲 단어 순서 섞기</button>
+<section class="panel" id="howto">
+  <h2>💡 어떻게 사용하면 좋을까?</h2>
+  <p class="sub">처음에는 예시를 보고 따라 해도 좋아요. 익숙해지면 단어 하나씩 바꿔 보세요.</p>
+  <div class="tips-grid">
+    <div class="tip-card"><b>1. 🌱 초급부터 시작</b><p>“I'd like water, please.”처럼 짧은 문장 하나로 답해 봐요. 완벽한 문법보다 직접 말해 보는 게 중요해요.</p></div>
+    <div class="tip-card"><b>2. 🌿 중급은 이유 더하기</b><p>“I like this cafe because it's quiet.”처럼 because를 붙여 이유를 설명해 보세요.</p></div>
+    <div class="tip-card"><b>3. 🌈 자유회화는 내 생각 말하기</b><p>정답을 찾으려 하지 말고 “I think…”, “In my opinion…”으로 내 생각을 표현해 봐요.</p></div>
+    <div class="tip-card"><b>4. 🔊 듣고 다시 말하기</b><p>시작 문장이나 예시 발음을 듣고 한 번 따라 해 보세요. 그다음 화면을 보지 않고 말해 봐요.</p></div>
+    <div class="tip-card"><b>5. 🎲 다른 시작 문장 눌러 보기</b><p>같은 장소에서도 새로운 질문을 연습할 수 있어요. 익숙한 질문만 반복하지 않게 도와줘요.</p></div>
+    <div class="tip-card"><b>6. ✍️ 막히면 쉬운 표현 쓰기</b><p>모르는 단어가 있으면 짧게 답하거나 단어장 검색을 이용해도 괜찮아요.</p></div>
   </div>
-  <p id="wordCount" class="muted"></p>
-  <div id="wordList" class="grid"></div>
+  <div class="example-box">
+    <b>예시: 카페에서 중급으로 연습하기</b>
+    <p><b>질문:</b> What do you usually order at a cafe?</p>
+    <p><b>대답 예시:</b> I usually order iced tea because it's refreshing.</p>
+    <p class="korean">저는 보통 아이스티를 주문해요. 상쾌하거든요.</p>
+    <button class="small blue" data-say="I usually order iced tea because it's refreshing.">🔊 예시 듣기</button>
+  </div>
 </section>
 
-<section id="phrases">
-  <h2>✨ 오늘의 핵심 문장</h2>
-  <p class="description">버튼을 누를 때마다 문장이 무작위로 새롭게 선택돼요.</p>
-  <button id="randomPhrases" class="primary">🎲 핵심 문장 새로 뽑기</button>
-  <div id="phraseList" class="grid" style="margin-top:14px"></div>
+<section class="panel" id="vocab">
+  <h2>📚 단어장</h2><p class="sub">영어 단어와 한국어 뜻을 검색해 보세요.</p>
+  <div class="row"><input id="searchWord" placeholder="예: nervous, 예약, 맛있는..."><button id="shuffleWords" class="pink">🎲 순서 섞기</button></div>
+  <p id="wordCount" class="muted"></p><div id="wordGrid" class="words-grid"></div>
 </section>
 
-<section id="quiz">
-  <h2>🎯 영어 회화 퀴즈</h2>
-  <p class="description">상황에 가장 잘 어울리는 답을 골라 보세요. 말로 답할 수도 있어요!</p>
-  <div class="progress"><div id="progressFill"></div></div>
-  <p id="quizProgress" class="muted">1 / 10 문제</p>
-  <h3 id="question">준비됐나요?</h3>
-  <p id="questionKo" class="muted"></p>
-  <div id="options"></div>
-  <div class="controls">
-    <button id="quizMic" class="pink">🎙️ 말로 답하기</button>
-    <button id="nextQuestion" class="primary" disabled>다음 문제 ➜</button>
-    <button id="restartQuiz" class="light">처음부터</button>
-  </div>
-  <p id="quizMicStatus" class="muted" aria-live="polite">영어 선택지의 문장이나 A, B, C, D를 말해 보세요.</p>
-  <div id="quizFeedback" aria-live="polite">정답을 고르면 여기에 결과가 나와요.</div>
+<section class="panel" id="phrases">
+  <h2>✨ 자주 쓰는 핵심 표현</h2><p class="sub">랜덤으로 8개 표현을 뽑아 연습할 수 있어요.</p>
+  <button id="shufflePhrases" class="primary">🎲 표현 새로 뽑기</button>
+  <div id="phraseGrid" class="words-grid"></div>
+</section>
+
+<section class="panel" id="quiz">
+  <h2>🎯 미니 퀴즈</h2><p class="sub">상황에 알맞은 영어 표현을 골라 보세요.</p>
+  <div class="progress"><div id="quizBar"></div></div>
+  <p id="quizCount" class="muted"></p><h3 id="quizQuestion"></h3><p id="quizKo" class="muted"></p>
+  <div id="quizOptions" class="quiz-options"></div>
+  <div class="row"><button id="quizMic" class="pink">🎙️ 말로 답하기</button><button id="quizNext" class="primary" disabled>다음 문제 ➜</button><button id="quizRestart" class="soft">처음부터</button></div>
+  <p id="quizVoice" class="hint">선택지의 영어 문장 또는 A, B, C, D를 말해 보세요.</p>
+  <div id="quizFeedback" class="feedback">답을 고르면 해설이 여기에 표시돼요.</div>
 </section>
 </main>
-
-<footer>🌷 Speak Easy · 실수하면서 배우는 즐거운 영어</footer>
-
-<script>
-const $ = id => document.getElementById(id);
-
-function shuffle(list) {
-  const result = [...list];
-  for (let i = result.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [result[i], result[j]] = [result[j], result[i]];
-  }
-  return result;
-}
-
-function speak(text) {
-  if (!("speechSynthesis" in window)) {
-    alert("이 브라우저는 음성 읽기를 지원하지 않아요.");
-    return;
-  }
-  window.speechSynthesis.cancel();
-  const utterance = new SpeechSynthesisUtterance(text);
-  utterance.lang = "en-US";
-  utterance.rate = 0.88;
-  window.speechSynthesis.speak(utterance);
-}
-
-// -------------------- 단어장 --------------------
-const words = [
-  ["일상","usually","유주얼리","보통, 대개","I usually walk to school."],
-  ["일상","perhaps","퍼햅스","아마","Perhaps we can meet tomorrow."],
-  ["일상","decide","디사이드","결정하다","I need to decide what to eat."],
-  ["일상","borrow","바로우","빌리다","Can I borrow your pen?"],
-  ["일상","remember","리멤버","기억하다","I remember your name."],
-  ["일상","improve","임프루브","향상시키다","I want to improve my English."],
-  ["일상","comfortable","컴프터블","편안한","These shoes are comfortable."],
-  ["일상","favorite","페이버릿","가장 좋아하는","This is my favorite song."],
-  ["감정","excited","익사이티드","신이 난","I'm excited about the trip."],
-  ["감정","nervous","너버스","긴장한","I feel nervous before a test."],
-  ["감정","proud","프라우드","자랑스러운","I'm proud of my work."],
-  ["감정","relaxed","릴랙스트","편안한","I feel relaxed at home."],
-  ["감정","disappointed","디서포인티드","실망한","I was disappointed with the result."],
-  ["감정","curious","큐리어스","호기심이 있는","I'm curious about that book."],
-  ["감정","cheerful","치어풀","쾌활한","She is always cheerful."],
-  ["감정","worried","워리드","걱정하는","Don't be worried about it."],
-  ["여행","ticket","티킷","표","I'd like to buy a ticket."],
-  ["여행","luggage","러기지","짐","Where can I leave my luggage?"],
-  ["여행","direction","디렉션","방향, 길 안내","Could you give me directions?"],
-  ["여행","reservation","레저베이션","예약","I have a reservation."],
-  ["여행","explore","익스플로어","탐험하다, 둘러보다","Let's explore the city."],
-  ["여행","nearby","니어바이","근처에","Is there a cafe nearby?"],
-  ["여행","journey","저니","여행, 여정","The journey was wonderful."],
-  ["여행","souvenir","수버니어","기념품","I bought a small souvenir."],
-  ["음식","delicious","딜리셔스","맛있는","This cake is delicious."],
-  ["음식","recommend","레커멘드","추천하다","What would you recommend?"],
-  ["음식","ingredient","인그리디언트","재료","What are the ingredients?"],
-  ["음식","order","오더","주문하다, 주문","Can I order now?"],
-  ["음식","spicy","스파이시","매운","Is this dish spicy?"],
-  ["음식","dessert","디저트","후식","I'd like some dessert."],
-  ["음식","thirsty","써스티","목마른","I'm a little thirsty."],
-  ["음식","menu","메뉴","메뉴판","Could I see the menu?"],
-  ["학교","assignment","어사인먼트","과제","I finished my assignment."],
-  ["학교","practice","프랙티스","연습하다, 연습","Practice makes progress."],
-  ["학교","concentrate","컨센트레이트","집중하다","I need to concentrate."],
-  ["학교","explain","익스플레인","설명하다","Could you explain it again?"],
-  ["학교","opinion","어피니언","의견","What's your opinion?"],
-  ["학교","project","프로젝트","과제, 프로젝트","Our project is almost done."],
-  ["학교","discuss","디스커스","토론하다","Let's discuss this together."],
-  ["학교","prepare","프리페어","준비하다","I need to prepare for class."],
-  ["쇼핑","price","프라이스","가격","What is the price?"],
-  ["쇼핑","expensive","익스펜시브","비싼","This bag is too expensive."],
-  ["쇼핑","cheap","칩","저렴한","I'm looking for something cheap."],
-  ["쇼핑","size","사이즈","크기, 치수","Do you have a larger size?"],
-  ["쇼핑","available","어베일러블","이용 가능한, 구할 수 있는","Is this available in blue?"],
-  ["쇼핑","choose","추즈","고르다","It's hard to choose one."],
-  ["쇼핑","receipt","리싯","영수증","Could I have a receipt?"],
-  ["쇼핑","discount","디스카운트","할인","Is there a discount?"]
-];
-
-function renderWords(randomize = false) {
-  const category = $("wordCategory").value;
-  const query = $("wordSearch").value.trim().toLowerCase();
-
-  let list = words.filter(w =>
-    (category === "all" || w[0] === category) &&
-    w.slice(1).join(" ").toLowerCase().includes(query)
-  );
-
-  if (randomize) list = shuffle(list);
-
-  $("wordList").innerHTML = "";
-  $("wordCount").textContent = `검색 결과 ${list.length}개`;
-
-  if (!list.length) {
-    $("wordList").textContent = "검색 결과가 없어요. 다른 단어로 검색해 보세요.";
-    return;
-  }
-
-  list.forEach(w => {
-    const card = document.createElement("div");
-    card.className = "item";
-
-    const categoryTag = document.createElement("div");
-    categoryTag.className = "muted";
-    categoryTag.textContent = "📌 " + w[0];
-
-    const en = document.createElement("div");
-    en.className = "en";
-    en.textContent = w[1];
-
-    const pron = document.createElement("div");
-    pron.className = "muted";
-    pron.textContent = "발음: " + w[2];
-
-    const ko = document.createElement("div");
-    ko.className = "ko";
-    ko.textContent = w[3];
-
-    const example = document.createElement("p");
-    example.textContent = w[4];
-
-    const btn = document.createElement("button");
-    btn.className = "smallbtn";
-    btn.textContent = "🔊 발음 듣기";
-    btn.addEventListener("click", () => speak(w[1]));
-
-    card.append(categoryTag, en, pron, ko, example, btn);
-    $("wordList").appendChild(card);
-  });
-}
-
-$("wordSearch").addEventListener("input", () => renderWords());
-$("wordCategory").addEventListener("change", () => renderWords());
-$("randomWords").addEventListener("click", () => renderWords(true));
-renderWords();
-
-// -------------------- 핵심 문장 --------------------
-const phrasePool = [
-  ["How's it going?","어떻게 지내?","It's going pretty well."],
-  ["Could you help me?","저 좀 도와주실 수 있나요?","Could you help me find this place?"],
-  ["That sounds great!","정말 좋겠다!","That sounds great! Let's do it."],
-  ["I'm not sure yet.","아직 잘 모르겠어.","I'm not sure yet. Let me think."],
-  ["What do you mean?","무슨 뜻이야?","What do you mean by that?"],
-  ["Could you say that again?","다시 말해 주실래요?","Sorry, could you say that again?"],
-  ["I'm looking forward to it.","그게 기대돼.","I'm looking forward to the weekend."],
-  ["It depends.","상황에 따라 달라.","It depends on the weather."],
-  ["That makes sense.","말이 되네, 이해돼.","Oh, that makes sense now."],
-  ["What do you recommend?","무엇을 추천하세요?","What do you recommend for beginners?"],
-  ["I really appreciate it.","정말 감사해요.","I really appreciate your help."],
-  ["To be honest, ...","솔직히 말하면 ...","To be honest, I'm a little tired."],
-  ["In my opinion, ...","내 생각에는 ...","In my opinion, this is a good idea."],
-  ["Could I have a moment?","잠시 시간을 주실 수 있나요?","Could I have a moment to think?"],
-  ["I'm getting used to it.","점점 익숙해지고 있어.","I'm getting used to speaking English."],
-  ["I see what you mean.","무슨 말인지 알겠어.","I see what you mean now."],
-  ["Would you mind helping me?","저를 도와주실 수 있을까요?","Would you mind helping me with this?"],
-  ["I've never tried that before.","그건 전에 해 본 적이 없어.","I've never tried sushi before."],
-  ["It was worth it.","그럴 만한 가치가 있었어.","The long trip was worth it."],
-  ["Let me think about it.","생각해 볼게.","Let me think about it for a while."],
-  ["I couldn't agree more.","정말 동의해.","I couldn't agree more with your idea."],
-  ["What have you been up to?","요즘 어떻게 지냈어?","Hey! What have you been up to?"],
-  ["I'm open to suggestions.","다른 의견도 환영해.","I'm open to suggestions for our trip."],
-  ["The best part was ...","가장 좋았던 부분은 ...","The best part was meeting new people."]
-];
-
-function renderPhrases() {
-  const list = shuffle(phrasePool).slice(0, 10);
-  $("phraseList").innerHTML = "";
-
-  list.forEach((p, i) => {
-    const card = document.createElement("div");
-    card.className = "item";
-
-    const en = document.createElement("div");
-    en.className = "en";
-    en.textContent = `${i + 1}. ${p[0]}`;
-
-    const ko = document.createElement("div");
-    ko.className = "ko";
-    ko.textContent = p[1];
-
-    const example = document.createElement("p");
-    example.textContent = "예문: " + p[2];
-
-    const btn = document.createElement("button");
-    btn.className = "smallbtn";
-    btn.textContent = "🔊 문장 듣기";
-    btn.addEventListener("click", () => speak(p[0]));
-
-    card.append(en, ko, example, btn);
-    $("phraseList").appendChild(card);
-  });
-}
-$("randomPhrases").addEventListener("click", renderPhrases);
-renderPhrases();
-
-// -------------------- 회화 연습 --------------------
-const levelInfo = {
-  beginner: {
-    label:"🌱 초급",
-    help:"짧고 쉬운 문장으로 대화해요.",
-    opening:"Hi! How are you?",
-    example:"I'm good, thank you!",
-    tip:"짧게 대답해도 괜찮아요. 천천히 한 문장씩 말해 보세요."
-  },
-  intermediate: {
-    label:"🌿 중급",
-    help:"이유와 경험을 덧붙여 대화해요.",
-    opening:"What do you enjoy doing in your free time?",
-    example:"I enjoy drawing because it helps me relax.",
-    tip:"because, usually, although 같은 표현으로 이유와 경험을 설명해 보세요."
-  },
-  free: {
-    label:"🌈 자유회화",
-    help:"정답 없이 자유롭게 생각을 표현해요.",
-    opening:"What's something interesting you've been thinking about lately?",
-    example:"I've been thinking about learning a new skill.",
-    tip:"자유회화에는 정해진 정답이 없어요. 자신의 생각과 이유를 편하게 말해 보세요."
-  }
-};
-
-const scenePrompts = {
-  cafe:{
-    beginner:["What would you like to drink?","Would you like anything else?","Is that for here or to go?"],
-    intermediate:["What kind of coffee do you usually order, and why?","Would you recommend this cafe to a friend? Why?","Do you prefer studying at a cafe or at home?"],
-    free:["What makes a cafe a nice place to spend time?","If you opened your own cafe, what would it be like?"]
-  },
-  intro:{
-    beginner:["What's your name?","What is your favorite hobby?","What's your favorite food?"],
-    intermediate:["What is something you're proud of, and why?","How would your friends describe you?","What skill would you like to develop?"],
-    free:["What is something you'd like people to understand about you?","What would you like to learn this year?"]
-  },
-  travel:{
-    beginner:["Where would you like to go?","What do you want to see there?","Do you like traveling?"],
-    intermediate:["What makes a trip memorable for you?","Would you rather explore a city or nature? Why?","How do you prepare for a trip?"],
-    free:["If you could spend a week anywhere, how would you spend it?","What can people learn from traveling?"]
-  },
-  friends:{
-    beginner:["What do you like to do with your friends?","What games do you like?","What makes you happy?"],
-    intermediate:["What qualities make someone a good friend?","How do you solve a disagreement with a friend?","What is a fun memory you have with your friends?"],
-    free:["What do you think makes a friendship last a long time?","How can friends support each other?"]
-  },
-  shopping:{
-    beginner:["What are you looking for?","What color do you like?","Would you like to try it on?"],
-    intermediate:["What do you consider before buying something?","Do you prefer shopping online or in stores? Why?","How do you decide whether something is worth buying?"],
-    free:["How do trends affect the things people buy?","What would your ideal shop sell?"]
-  },
-  restaurant:{
-    beginner:["Are you ready to order?","What would you like to eat?","Would you like some water?"],
-    intermediate:["What kind of food would you recommend to a visitor?","Do you prefer eating out or cooking at home? Why?","What makes a restaurant worth visiting?"],
-    free:["If you designed a restaurant, what food and atmosphere would it have?","How does food connect people and cultures?"]
-  }
-};
-
-const sceneReplies = {
-  cafe:{
-    beginner:["I'd like a hot chocolate, please.","Yes, please.","To go, please."],
-    intermediate:["I usually order a latte because I like its smooth taste.","I'd recommend it because the atmosphere is relaxing.","I prefer studying at a cafe because I enjoy the background noise."]
-  },
-  intro:{
-    beginner:["My name is Alex.","I like drawing.","My favorite food is pasta."],
-    intermediate:["I'm proud of learning something difficult because I worked hard.","My friends would describe me as kind and creative.","I'd like to improve my speaking skills."]
-  },
-  travel:{
-    beginner:["I'd like to visit Japan.","I want to see the city.","Yes, I do!"],
-    intermediate:["A memorable trip includes good company and new experiences.","I'd rather explore nature because it helps me relax.","I make a list and check the weather."]
-  },
-  friends:{
-    beginner:["I like playing games with my friends.","I like board games.","Spending time with my friends makes me happy."],
-    intermediate:["A good friend is someone who listens and respects others.","I try to listen and explain how I feel.","I remember a day when we laughed a lot together."]
-  },
-  shopping:{
-    beginner:["I'm looking for a T-shirt.","I like blue.","Yes, thank you."],
-    intermediate:["I consider the price, quality, and whether I need it.","I prefer shopping in stores because I can try things on.","I compare the quality and price before deciding."]
-  },
-  restaurant:{
-    beginner:["I'd like some pasta, please.","I'd like chicken, please.","Yes, please."],
-    intermediate:["I'd recommend a local dish because it shows the culture.","I enjoy both, but cooking at home is relaxing.","Good food, friendly staff, and a comfortable atmosphere make it worth visiting."]
-  }
-};
-
-const freeReplies = [
-  "That's an interesting question. I think it depends on the situation.",
-  "I haven't thought about that before, but I think it's important.",
-  "In my opinion, trying new things can help us grow.",
-  "I'd like to learn more about that because it sounds interesting.",
-  "I think both choices have advantages, depending on what you need."
-];
-
-let currentLevel = "beginner";
-let currentScene = "cafe";
-let conversationTurn = 0;
-let conversationStarted = false;
-
-function addMessage(text, who) {
-  const bubble = document.createElement("div");
-  bubble.className = "bubble " + who;
-
-  const label = document.createElement("small");
-  label.textContent = who === "bot" ? "Speak Easy" : "You";
-
-  const content = document.createElement("div");
-  content.textContent = text;
-
-  bubble.append(label, content);
-
-  if (who === "bot") {
-    const listen = document.createElement("button");
-    listen.className = "smallbtn";
-    listen.textContent = "🔊 듣기";
-    listen.style.marginTop = "8px";
-    listen.addEventListener("click", () => speak(text));
-    bubble.appendChild(listen);
-  }
-
-  $("chatbox").appendChild(bubble);
-  $("chatbox").scrollTop = $("chatbox").scrollHeight;
-}
-
-function startConversation() {
-  currentLevel = $("level").value;
-  currentScene = $("scene").value;
-  conversationTurn = 0;
-  conversationStarted = true;
-
-  const info = levelInfo[currentLevel];
-  $("levelHelp").textContent = info.label + " · " + info.help;
-  $("chatbox").innerHTML = "";
-
-  addMessage(info.opening, "bot");
-
-  $("tip").textContent =
-    "💡 예시 답변: " + info.example + "\n" + info.tip;
-
-  $("chatInput").value = "";
-  $("chatInput").placeholder = "영어로 대답하세요...";
-  $("chatInput").focus();
-}
-
-function sendMessage() {
-  const message = $("chatInput").value.trim();
-  if (!message) {
-    $("speechStatus").textContent = "먼저 영어 답변을 입력하거나 마이크로 말해 보세요.";
-    return;
-  }
-
-  if (!conversationStarted) startConversation();
-
-  addMessage(message, "user");
-  $("chatInput").value = "";
-  conversationTurn++;
-
-  let reply;
-  if (currentLevel === "free") {
-    const promptList = scenePrompts[currentScene].free;
-    reply = promptList[(conversationTurn - 1) % promptList.length];
-  } else {
-    const replies = sceneReplies[currentScene][currentLevel];
-    reply = replies[(conversationTurn - 1) % replies.length];
-  }
-
-  window.setTimeout(() => {
-    addMessage(reply, "bot");
-    $("tip").textContent = "💡 예시 답변: " + levelInfo[currentLevel].example +
-      "\n직접 답해 보세요. 문장을 눌러 음성으로 들을 수도 있어요!";
-  }, 250);
-}
-
-$("startBtn").addEventListener("click", startConversation);
-$("sendBtn").addEventListener("click", sendMessage);
-$("chatInput").addEventListener("keydown", event => {
-  if (event.key === "Enter") sendMessage();
-});
-
-// 회화 음성 입력
-const SpeechAPI = window.SpeechRecognition || window.webkitSpeechRecognition;
-let conversationRecognition = null;
-
-if (SpeechAPI) {
-  conversationRecognition = new SpeechAPI();
-  conversationRecognition.lang = "en-US";
-  conversationRecognition.interimResults = false;
-  conversationRecognition.continuous = false;
-
-  conversationRecognition.onstart = () => {
-    $("micBtn").textContent = "🔴 듣는 중...";
-    $("speechStatus").textContent = "영어로 말해 보세요!";
-  };
-
-  conversationRecognition.onresult = event => {
-    $("chatInput").value = event.results[0][0].transcript;
-    $("speechStatus").textContent =
-      "인식한 문장: " + event.results[0][0].transcript;
-  };
-
-  conversationRecognition.onerror = event => {
-    $("speechStatus").textContent =
-      event.error === "not-allowed"
-        ? "마이크 권한을 허용해 주세요."
-        : "음성을 인식하지 못했어요. 다시 시도해 주세요.";
-  };
-
-  conversationRecognition.onend = () => {
-    $("micBtn").textContent = "🎙️ 말하기";
-  };
-}
-
-$("micBtn").addEventListener("click", () => {
-  if (!conversationRecognition) {
-    $("speechStatus").textContent =
-      "이 브라우저는 음성 입력을 지원하지 않아요. 최신 Chrome에서 시도해 보세요.";
-    return;
-  }
-  try {
-    conversationRecognition.start();
-  } catch (error) {
-    $("speechStatus").textContent = "잠시 기다렸다가 다시 눌러 주세요.";
-  }
-});
-
-// -------------------- 퀴즈 --------------------
-const questions = [
-  {q:"Someone says, 'How are you?' What is a natural reply?",ko:"누군가 안부를 물을 때 자연스러운 대답은?",opts:["I'm fine, thank you.","It's five o'clock.","I'm from Korea.","See you yesterday."],a:0,why:"안부에는 'I'm fine, thank you.'라고 대답할 수 있어요."},
-  {q:"How do you politely ask for a drink in a cafe?",ko:"카페에서 음료를 정중하게 주문하는 말은?",opts:["Give drink!","I'd like a tea, please.","I drink yesterday.","Where you tea?"],a:1,why:"'I'd like ..., please.'는 정중하게 주문할 때 쓰는 표현이에요."},
-  {q:"What does 'I'm looking forward to it' mean?",ko:"이 표현의 의미는 무엇일까요?",opts:["그게 걱정돼.","그게 싫어.","그게 기대돼.","그걸 잊어버렸어."],a:2,why:"'look forward to'는 어떤 일을 기대한다는 뜻이에요."},
-  {q:"You didn't hear something. What should you say?",ko:"상대방의 말을 못 들었을 때는?",opts:["Say it yesterday.","Could you say that again?","I don't hear tomorrow.","Talk more blue."],a:1,why:"'Could you say that again?'은 다시 말해 달라는 정중한 표현이에요."},
-  {q:"What does 'How much is this?' ask about?",ko:"이 문장은 무엇을 물어볼까요?",opts:["The price","The weather","The time","The person's name"],a:0,why:"'How much'는 가격이나 양을 물을 때 사용해요."},
-  {q:"A friend says, 'Let's go to the park!' What is a positive reply?",ko:"친구의 제안에 긍정적으로 답하는 말은?",opts:["That sounds great!","I am a park.","It costs yesterday.","No understand blue."],a:0,why:"'That sounds great!'는 제안에 기쁘게 동의하는 표현이에요."},
-  {q:"What does 'I'm a little nervous' mean?",ko:"이 문장의 의미는 무엇일까요?",opts:["나는 조금 배고파.","나는 조금 긴장돼.","나는 아주 신나.","나는 길을 잃었어."],a:1,why:"'nervous'는 긴장하거나 불안한 상태를 뜻해요."},
-  {q:"How can you ask for directions politely?",ko:"길을 정중하게 물어보는 표현은?",opts:["Where direction you?","Could you tell me how to get there?","You road yesterday?","Give me map now, rude."],a:1,why:"'Could you tell me how to get there?'는 길을 물을 때 쓸 수 있어요."},
-  {q:"What does 'In my opinion' mean?",ko:"이 표현의 의미는 무엇일까요?",opts:["내일 아침에","내 친구의 이름은","내 생각에는","나는 기억하지 못해"],a:2,why:"'In my opinion'은 자신의 의견을 말할 때 사용해요."},
-  {q:"Someone helps you. What is a good response?",ko:"누군가 도와주었을 때 좋은 대답은?",opts:["I appreciate your help.","I help you yesterday?","Why are you help?","I am a receipt."],a:0,why:"'I appreciate your help.'는 도움에 감사할 때 쓸 수 있어요."}
-];
-
-let quizOrder = [];
-let qi = 0;
-let score = 0;
-let answered = false;
-
-function startQuiz() {
-  quizOrder = shuffle(questions);
-  qi = 0;
-  score = 0;
-  answered = false;
-  renderQuestion();
-}
-
-function renderQuestion() {
-  answered = false;
-
-  const q = quizOrder[qi];
-  $("quizProgress").textContent = `${qi + 1} / ${quizOrder.length} 문제`;
-  $("progressFill").style.width = `${qi / quizOrder.length * 100}%`;
-  $("question").textContent = q.q;
-  $("questionKo").textContent = q.ko;
-  $("options").innerHTML = "";
-  $("quizFeedback").textContent = "정답을 선택해 보세요!";
-  $("nextQuestion").disabled = true;
-  $("nextQuestion").textContent =
-    qi === quizOrder.length - 1 ? "결과 보기 🎉" : "다음 문제 ➜";
-
-  q.opts.forEach((option, i) => {
-    const btn = document.createElement("button");
-    btn.className = "option";
-    btn.textContent = `${String.fromCharCode(65 + i)}. ${option}`;
-    btn.addEventListener("click", () => chooseAnswer(i, btn));
-    $("options").appendChild(btn);
-  });
-
-  $("quizMicStatus").textContent =
-    "영어 문장이나 A, B, C, D를 말해 답할 수 있어요.";
-}
-
-function chooseAnswer(index, selectedButton) {
-  if (answered) return;
-  answered = true;
-
-  const q = quizOrder[qi];
-  const buttons = [...$("options").children];
-
-  buttons.forEach((button, i) => {
-    button.disabled = true;
-    if (i === q.a) button.classList.add("correct");
-    if (i === index && i !== q.a) button.classList.add("wrong");
-  });
-
-  if (index === q.a) {
-    score++;
-    $("quizFeedback").textContent = "🎉 정답이에요!\n" + q.why;
-  } else {
-    $("quizFeedback").textContent =
-      "🌱 아쉽지만 괜찮아요!\n정답: " +
-      String.fromCharCode(65 + q.a) + ". " + q.opts[q.a] +
-      "\n" + q.why;
-  }
-
-  $("progressFill").style.width =
-    `${(qi + 1) / quizOrder.length * 100}%`;
-  $("nextQuestion").disabled = false;
-}
-
-$("nextQuestion").addEventListener("click", () => {
-  if (!answered) return;
-
-  if (qi < quizOrder.length - 1) {
-    qi++;
-    renderQuestion();
-  } else {
-    $("question").textContent = `퀴즈 완료! ${score} / ${quizOrder.length}점`;
-    $("questionKo").textContent =
-      score >= 8 ? "정말 잘했어요! 🎉" :
-      score >= 5 ? "잘했어요! 다시 풀면 더 익숙해질 거예요. 🌷" :
-      "괜찮아요! 해설을 복습하고 다시 도전해 봐요. 💪";
-    $("options").innerHTML = "";
-    $("quizFeedback").textContent =
-      `최종 점수: ${score} / ${quizOrder.length}\n처음부터 버튼을 눌러 다시 도전할 수 있어요.`;
-    $("quizProgress").textContent = "모든 문제를 풀었어요!";
-    $("progressFill").style.width = "100%";
-    $("nextQuestion").disabled = true;
-  }
-});
-
-$("restartQuiz").addEventListener("click", startQuiz);
-
-// 퀴즈 음성 답변
-let quizRecognition = null;
-let quizListening = false;
-
-if (SpeechAPI) {
-  quizRecognition = new SpeechAPI();
-  quizRecognition.lang = "en-US";
-  quizRecognition.interimResults = false;
-  quizRecognition.continuous = false;
-
-  quizRecognition.onstart = () => {
-    quizListening = true;
-    $("quizMic").textContent = "🔴 듣는 중...";
-    $("quizMicStatus").textContent =
-      "영어 문장이나 A, B, C, D를 말해 보세요.";
-  };
-
-  quizRecognition.onresult = event => {
-    const spoken = event.results[0][0].transcript
-      .trim().toLowerCase()
-      .replace(/[.!?,]/g, "")
-      .replace(/\s+/g, " ");
-
-    if (answered) {
-      $("quizMicStatus").textContent =
-        "이미 답을 제출했어요. 다음 문제로 넘어가 주세요.";
-      return;
-    }
-
-    const q = quizOrder[qi];
-    const letterMatch = spoken.match(/^(?:option |answer )?([abcd])$/);
-    const numberWords = {
-      "first":0, "first one":0, "the first one":0,
-      "second":1, "second one":1, "the second one":1,
-      "third":2, "third one":2, "the third one":2,
-      "fourth":3, "fourth one":3, "the fourth one":3
-    };
-
-    let selected = -1;
-
-    if (letterMatch) {
-      selected = letterMatch[1].charCodeAt(0) - 97;
-    } else if (numberWords[spoken] !== undefined) {
-      selected = numberWords[spoken];
-    } else {
-      selected = q.opts.findIndex(option =>
-        option.toLowerCase().replace(/[.!?,]/g, "").trim() === spoken
-      );
-    }
-
-    if (selected >= 0 && selected < q.opts.length) {
-      $("quizMicStatus").textContent = "인식한 답변: " + spoken;
-      chooseAnswer(selected, $("options").children[selected]);
-    } else {
-      $("quizMicStatus").textContent =
-        "인식한 말: " + spoken +
-        " — 선택지의 영어 문장이나 A, B, C, D를 말해 보세요.";
-    }
-  };
-
-  quizRecognition.onerror = event => {
-    $("quizMicStatus").textContent =
-      event.error === "not-allowed"
-        ? "마이크 권한을 허용해 주세요."
-        : "음성을 인식하지 못했어요. 다시 시도해 주세요.";
-  };
-
-  quizRecognition.onend = () => {
-    quizListening = false;
-    $("quizMic").textContent = "🎙️ 말로 답하기";
-  };
-}
-
-$("quizMic").addEventListener("click", () => {
-  if (!quizRecognition) {
-    $("quizMicStatus").textContent =
-      "이 브라우저는 음성 인식을 지원하지 않아요. 최신 Chrome을 사용해 보세요.";
-    return;
-  }
-  if (quizListening) {
-    quizRecognition.stop();
-    return;
-  }
-  if (answered) {
-    $("quizMicStatus").textContent =
-      "다음 문제로 넘어간 뒤 말로 답해 주세요.";
-    return;
-  }
-  try {
-    quizRecognition.start();
-  } catch (error) {
-    $("quizMicStatus").textContent =
-      "잠시 기다렸다가 마이크 버튼을 다시 눌러 주세요.";
-  }
-});
-
-startQuiz();
-</script>
-</body>
-</html>
-
-
-
-
+<footer>🌷 Speak Easy · 매일 조금씩, 편안하게 영어로 말해 봐요!</footer>
